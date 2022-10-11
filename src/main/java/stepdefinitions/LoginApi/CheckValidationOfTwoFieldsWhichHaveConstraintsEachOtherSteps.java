@@ -12,13 +12,13 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-public class CheckInvalidURL {
+public class CheckValidationOfTwoFieldsWhichHaveConstraintsEachOtherSteps {
 	String url = null;
 	int code=0;
 	String message = null; 
 	@Given("I have URL and method")
 	public void i_have_url_and_method() {
-		url = "https://reqres.in/api111/login1";
+		url = "https://reqres.in/api/unknown/2";
 		String method = "GET";
 	}
 
@@ -41,8 +41,20 @@ public class CheckInvalidURL {
 
 	@Then("I validate status code and message")
 	public void i_validate_status_code_and_message() {
-		Assert.assertEquals(code, 401);
-		Assert.assertEquals(message, "Not found");
+		Assert.assertEquals(code, 200);
+		Assert.assertEquals(message, "{\n"
+				+ "    \"data\": {\n"
+				+ "        \"id\": 2,\n"
+				+ "        \"name\": \"fuchsia rose\",\n"
+				+ "        \"year\": 2001,\n"
+				+ "        \"color\": \"#C74375\",\n"
+				+ "        \"pantone_value\": \"17-2031\"\n"
+				+ "    },\n"
+				+ "    \"support\": {\n"
+				+ "        \"url\": \"https://reqres.in/#support-heading\",\n"
+				+ "        \"text\": \"To keep ReqRes free, contributions towards server costs are appreciated!\"\n"
+				+ "    }\n"
+				+ "}");
 	}
 
 }
