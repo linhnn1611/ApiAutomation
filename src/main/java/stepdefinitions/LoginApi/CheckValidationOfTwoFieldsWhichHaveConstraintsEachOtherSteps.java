@@ -16,14 +16,14 @@ public class CheckValidationOfTwoFieldsWhichHaveConstraintsEachOtherSteps {
 	String url = null;
 	int code=0;
 	String message = null; 
-	@Given("I have URL and method")
-	public void i_have_url_and_method() {
+	@Given("I have URL and method5")
+	public void i_have_url_and_method5() {
 		url = "https://reqres.in/api/unknown/2";
 		String method = "GET";
 	}
 
-	@When("I send request and check status code and message in response")
-	public void i_send_request_and_check_status_code_and_message_in_response() {
+	@When("I send request and check status code and message in response5")
+	public void i_send_request_and_check_status_code_and_message_in_response5() {
 		HttpRequest request = HttpRequest.newBuilder()
 				.GET().uri(URI.create(url))
 				.build();
@@ -39,8 +39,8 @@ public class CheckValidationOfTwoFieldsWhichHaveConstraintsEachOtherSteps {
 		message = response.toString();
 	}
 
-	@Then("I validate status code and message")
-	public void i_validate_status_code_and_message() {
+	@Then("I validate status code and message5")
+	public void i_validate_status_code_and_message5() {
 		Assert.assertEquals(code, 200);
 		Assert.assertEquals(message, "{\n"
 				+ "    \"data\": {\n"

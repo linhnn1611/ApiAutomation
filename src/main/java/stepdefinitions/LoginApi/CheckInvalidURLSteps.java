@@ -16,14 +16,14 @@ public class CheckInvalidURLSteps {
 	String url = null;
 	int code=0;
 	String message = null; 
-	@Given("I have URL and method")
-	public void i_have_url_and_method() {
+	@Given("I have URL and method3")
+	public void i_have_url_and_method3() {
 		url = "https://reqres.in/api111/login1";
 		String method = "GET";
 	}
 
-	@When("I send request and check status code and message in response")
-	public void i_send_request_and_check_status_code_and_message_in_response() {
+	@When("I send request and check status code and message in response3")
+	public void i_send_request_and_check_status_code_and_message_in_response3() {
 		HttpRequest request = HttpRequest.newBuilder()
 				.GET().uri(URI.create(url))
 				.build();
@@ -39,8 +39,8 @@ public class CheckInvalidURLSteps {
 		message = response.toString();
 	}
 
-	@Then("I validate status code and message")
-	public void i_validate_status_code_and_message() {
+	@Then("I validate status code and message3")
+	public void i_validate_status_code_and_message3() {
 		Assert.assertEquals(code, 401);
 		Assert.assertEquals(message, "Not found");
 	}

@@ -20,14 +20,14 @@ public class CheckInvalidMethodSteps {
 	String url = null;
 	int code=0;
 	String message = null; 
-	@Given("I have URL and method")
-	public void i_have_url_and_method() {
+	@Given("I have URL and method2")
+	public void i_have_url_and_method2() {
 		url = "https://reqres.in/api/login";
 		String method = "GET";
 	}
 
-	@When("I send request and check status code and message in response")
-	public void i_send_request_and_check_status_code_and_message_in_response() {
+	@When("I send request and check status code and message in response2")
+	public void i_send_request_and_check_status_code_and_message_in_response2() {
 		HttpRequest request = HttpRequest.newBuilder()
 				.GET().uri(URI.create(url))
 				.build();
@@ -43,8 +43,8 @@ public class CheckInvalidMethodSteps {
 		message = response.toString();
 	}
 
-	@Then("I validate status code and message")
-	public void i_validate_status_code_and_message() {
+	@Then("I validate status code and message2")
+	public void i_validate_status_code_and_message2() {
 		Assert.assertEquals(code, 405);
 		Assert.assertEquals(message, "Invalid Method");
 	}
