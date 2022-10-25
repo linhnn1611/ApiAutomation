@@ -5,36 +5,32 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
+import java.util.Map;
 
 import org.testng.Assert;
 
+import common.ApiUtils;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class CheckValidationOfSingleFieldSteps {
-	String url = null;
+	String url, method = null;
 	int code=0;
-	String message = null; 
+	String message = null;
+	HttpResponse<String> response=null;
 	@Given("I have URL and method4")
-	public void i_have_url_and_method4() {
-		url = "https://reqres.in/api/unknown/2";
-		String method = "GET";
+	public void i_have_url_and_method4(List<Map<String, String>> givenTable) {
+		Map<String, String> row1=givenTable.get(0);
+		url= row1.get("URL");
+		method= row1.get("method4");
 	}
 
 	@When("I send request and check status code and message in response4")
 	public void i_send_request_and_check_status_code_and_message_in_response4() {
-		HttpRequest request = HttpRequest.newBuilder()
-				.GET().uri(URI.create(url))
-				.build();
-		HttpResponse<String> response = null;
-		try {
-		response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		ApiUtils apiUtil= new ApiUtils();
+		response = apiUtil.sendRequest(url, message, method);		
 		code = response.statusCode();
 		message = response.toString();
 	}

@@ -5,36 +5,33 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
+import java.util.Map;
 
 import org.testng.Assert;
 
+import common.ApiUtils;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class CheckValidationOfTwoFieldsWhichHaveConstraintsEachOtherSteps {
-	String url = null;
-	int code=0;
-	String message = null; 
+	String url, method = null;
+	int code = 0;
+	String message = null;
+	HttpResponse<String> response = null;
+
 	@Given("I have URL and method5")
-	public void i_have_url_and_method5() {
-		url = "https://reqres.in/api/unknown/2";
-		String method = "GET";
+	public void i_have_url_and_method5(List<Map<String, String>> givenTable) {
+		Map<String, String> row1 = givenTable.get(0);
+		url = row1.get("URL");
+		method = row1.get("method5");
 	}
 
 	@When("I send request and check status code and message in response5")
 	public void i_send_request_and_check_status_code_and_message_in_response5() {
-		HttpRequest request = HttpRequest.newBuilder()
-				.GET().uri(URI.create(url))
-				.build();
-		HttpResponse<String> response = null;
-		try {
-		response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		ApiUtils apiUtil = new ApiUtils();
+		response = apiUtil.sendRequest(url, message, method);
 		code = response.statusCode();
 		message = response.toString();
 	}
@@ -42,19 +39,12 @@ public class CheckValidationOfTwoFieldsWhichHaveConstraintsEachOtherSteps {
 	@Then("I validate status code and message5")
 	public void i_validate_status_code_and_message5() {
 		Assert.assertEquals(code, 200);
-		Assert.assertEquals(message, "{\n"
-				+ "    \"data\": {\n"
-				+ "        \"id\": 2,\n"
-				+ "        \"name\": \"fuchsia rose\",\n"
-				+ "        \"year\": 2001,\n"
-				+ "        \"color\": \"#C74375\",\n"
-				+ "        \"pantone_value\": \"17-2031\"\n"
-				+ "    },\n"
-				+ "    \"support\": {\n"
-				+ "        \"url\": \"https://reqres.in/#support-heading\",\n"
+		Assert.assertEquals(message, "{\n" + "    \"data\": {\n" + "        \"id\": 2,\n"
+				+ "        \"name\": \"fuchsia rose\",\n" + "        \"year\": 2001,\n"
+				+ "        \"color\": \"#C74375\",\n" + "        \"pantone_value\": \"17-2031\"\n" + "    },\n"
+				+ "    \"support\": {\n" + "        \"url\": \"https://reqres.in/#support-heading\",\n"
 				+ "        \"text\": \"To keep ReqRes free, contributions towards server costs are appreciated!\"\n"
-				+ "    }\n"
-				+ "}");
+				+ "    }\n" + "}");
 	}
 
 }

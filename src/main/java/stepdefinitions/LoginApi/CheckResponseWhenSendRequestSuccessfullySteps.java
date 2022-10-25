@@ -1,8 +1,9 @@
-package stepdefinitions.LoginApi;
+ package stepdefinitions.LoginApi;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.net.URI;
+import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -52,14 +53,14 @@ public class CheckResponseWhenSendRequestSuccessfullySteps {
 	@When("I send request")
 	public void i_send_request() {
 		ApiUtils apiUtils = new ApiUtils();
-		response = apiUtils.sendRequest(url, requestBody, method);
+		response = apiUtils.sendRequest(method, url, requestBody);
 
 	}
 
 	@Then("I validate status code and token")
 	public void i_validate_status_code_and_token() {
 		int actualStatusCode = response.statusCode();
-		Assert.assertEquals(actualStatusCode, 200);
+		Assert.assertEquals(actualStatusCode, "200");
 		String responseBody = response.body();
 		JSONParser responseParser = new JSONParser();
 		String actualToken = " ";
@@ -72,4 +73,5 @@ public class CheckResponseWhenSendRequestSuccessfullySteps {
 			e.printStackTrace();
 		}
 	}
+
 }
