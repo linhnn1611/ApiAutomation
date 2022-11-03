@@ -28,7 +28,7 @@ public class CheckInvalidMethodSteps {
 	public void i_have_url_and_method2(List<Map<String, String>> givenTable) {
 		Map<String, String> row1=givenTable.get(0);
 		url=row1.get("URL");
-		method=row1.get("method");
+		method=row1.get("method2");
 	}
 
 	@When("I send request and check status code and message in response2")
