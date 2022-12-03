@@ -11,40 +11,35 @@ import java.util.Map;
 import org.testng.Assert;
 
 import common.ApiUtils;
+import common.JsonUtils;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class CheckValidationOfTwoFieldsWhichHaveConstraintsEachOtherSteps {
-	String url, method = null;
-	int code = 0;
-	String message = null;
-	HttpResponse<String> response = null;
+	String url, method, requestBodyName = null;
+	HttpResponse<String> response=null;
+	JsonUtils jsonUtils = new JsonUtils(); 
 
-	@Given("I have URL and method5")
-	public void i_have_url_and_method5(List<Map<String, String>> givenTable) {
-		Map<String, String> row1 = givenTable.get(0);
-		url = row1.get("URL");
-		method = row1.get("method5");
+	@Given("I have URL and method4 and RequestBodyName")
+	public void i_have_url_and_method4_and_request_body_name(List<Map<String, String>> givenTable) {
+		Map<String, String> row1=givenTable.get(0);
+		url= row1.get("URL");
+		method= row1.get("method4");
+		requestBodyName = row1.get("RequestBodyName");
+		if (requestBodyName != " ") {
+			requestBodyName = jsonUtils.getRequestBodyByName(requestBodyName);
+		}
 	}
 
-	@When("I send request and check status code and message in response5")
-	public void i_send_request_and_check_status_code_and_message_in_response5() {
-		ApiUtils apiUtil = new ApiUtils();
-		response = apiUtil.sendRequest(url, message, method);
-		code = response.statusCode();
-		message = response.toString();
+	@When("I send valid login request with {string} and {string} and {string} and {string}")
+	public void i_send_valid_login_request_with_and_and_and(String string, String string2, String string3, String string4) {
+	   
 	}
 
-	@Then("I validate status code and message5")
-	public void i_validate_status_code_and_message5() {
-		Assert.assertEquals(code, 200);
-		Assert.assertEquals(message, "{\n" + "    \"data\": {\n" + "        \"id\": 2,\n"
-				+ "        \"name\": \"fuchsia rose\",\n" + "        \"year\": 2001,\n"
-				+ "        \"color\": \"#C74375\",\n" + "        \"pantone_value\": \"17-2031\"\n" + "    },\n"
-				+ "    \"support\": {\n" + "        \"url\": \"https://reqres.in/#support-heading\",\n"
-				+ "        \"text\": \"To keep ReqRes free, contributions towards server costs are appreciated!\"\n"
-				+ "    }\n" + "}");
+	@Then("Check response return {string} and {string}")
+	public void check_response_return_and(String string, String string2) {
+	   
 	}
 
 }
